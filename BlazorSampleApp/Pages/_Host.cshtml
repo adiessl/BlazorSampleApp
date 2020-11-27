@@ -1,9 +1,12 @@
 ﻿@page "/"
+@using Microsoft.AspNetCore.Authorization
 @namespace BlazorSampleApp.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = null;
 }
+
+@attribute [Authorize]
 
 <!DOCTYPE html>
 <html lang="en">
