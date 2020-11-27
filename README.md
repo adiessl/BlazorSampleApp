@@ -1,8 +1,10 @@
 # BlazorSampleApp
 
-This repository showcases an error regarding the redirection of an unauthorized user to the login page. It is not yet clear, if the error is caused by configuring the app wrongly or by a bug in the framework.
+This repository showcases an error regarding the redirection of an unauthorized user to the login page. ~~It is not yet clear, if the error is caused by configuring the app wrongly or by a bug in the framework.~~ 
 
 The repository was created to be used in https://github.com/dotnet/aspnetcore/issues/28199.
+
+The problem was a configuration error: the `Authorize` attribute must be placed inside `_Host.cshtml` to work as desired. This repository was updated accordingly.
 
 ## Steps to reproduce
 1. Open the solution
