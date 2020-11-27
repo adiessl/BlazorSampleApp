@@ -69,8 +69,15 @@ namespace BlazorSampleApp
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapBlazorHub();
+                {
+                    var authorizeAttribute = new AuthorizeAttribute
+                                             {
+                                                 AuthenticationSchemes =
+                                                     CookieAuthenticationDefaults.AuthenticationScheme
+                                             };
+
+                endpoints.MapRazorPages().RequireAuthorization(authorizeAttribute);
+                endpoints.MapBlazorHub().RequireAuthorization(authorizeAttribute);
                 endpoints.MapFallbackToPage("/_Host");
             });
         }
