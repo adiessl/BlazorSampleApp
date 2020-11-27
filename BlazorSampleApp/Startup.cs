@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+
 namespace BlazorSampleApp
 {
     public class Startup
@@ -26,6 +29,14 @@ namespace BlazorSampleApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            services.AddAuthorization(options =>
+                {
+                    options.DefaultPolicy =
+                        new AuthorizationPolicyBuilder(CookieAuthenticationDefaults.AuthenticationScheme)
+                            .RequireAuthenticatedUser().Build();
+                });
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
@@ -49,6 +60,9 @@ namespace BlazorSampleApp
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
